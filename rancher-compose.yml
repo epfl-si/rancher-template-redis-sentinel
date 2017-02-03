@@ -1,0 +1,7 @@
+---
+.catalog:
+  name: redis-sentinel
+  version: v0
+  description: Redis in HA with Sentinel
+  uuid: redis-0
+

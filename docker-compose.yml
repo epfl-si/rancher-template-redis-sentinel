@@ -1,0 +1,48 @@
+---
+version: '2'
+services:
+  redis:
+    image: redis:3.2
+    volumes_from:
+     - redis-conf
+    command: /etc/redis/redis.conf
+    labels:
+      io.rancher.sidekicks: redis-conf
+      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+
+  redis-conf:
+    image: epflidevelop/redis-conf:latest
+    environment:
+      GEN_REDIS_SLAVE_CONF: true
+      GEN_REDIS_CLUSTER_CONF: false
+      GEN_SENTINEL_CONF: false
+    volumes:
+      - redis-conf:/etc/redis
+    labels:
+      io.rancher.container.start_once: 'true'
+      io.rancher.container.pull_image: always
+
+  sentinel:
+    image: redis:3.2
+    volumes_from:
+     - sentinel-conf
+    command: /etc/redis/redis.conf --sentinel
+    links:
+     - redis
+    labels:
+      io.rancher.sidekicks: sentinel-conf
+      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+
+  sentinel-conf:
+    image: epflidevelop/redis-conf:latest
+    environment:
+      GEN_REDIS_SLAVE_CONF: false
+      GEN_REDIS_CLUSTER_CONF: false
+      GEN_SENTINEL_CONF: true
+      SENTINEL_MASTER_HOST: redis
+    volumes:
+      - sentinel-conf:/etc/redis
+    labels:
+      io.rancher.container.start_once: 'true'
+      io.rancher.container.pull_image: always
+

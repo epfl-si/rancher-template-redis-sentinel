@@ -19,3 +19,5 @@ This Template does not configure the underlying Host, so redis will complain (wr
  - If a Sentinel container is destroyed, the other Sentinel must be reconfigured to `forget` it, as documented in the `Adding or removing Sentinels` section of the [Sentinel Documentation](https://redis.io/topics/sentinel)
  - Restarting a sentinel with the same configuration in another container (i.e. rancher upgrade process) *should* be transparent but is *untested*
  - The redis cluster is automatically maintained by Sentinel, so Master-Slave replications should always follow but *not all cases were tested*
+
+(c) All rights reserved. ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland, VPSI, 2017

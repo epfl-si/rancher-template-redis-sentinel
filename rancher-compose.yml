@@ -3,6 +3,7 @@
 .catalog:
   name: redis-sentinel
   version: v0
+  uuid: redis-sentinel-0
   description: Redis in HA with Sentinel
   uuid: redis-0
 
